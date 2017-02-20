@@ -1,18 +1,16 @@
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QDebug>
+//#include <QQmlApplicationEngine>
+//#include <QQmlContext>
+//#include <QDebug>
+#include "myapplicationwindow.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    myApplicationWindow win;
+    win.Init();
 
-    engine.rootContext()->setContextProperty("applicationPath", QVariant("file://"+qApp->applicationDirPath()+ "/"));
-
-    qDebug() << qApp->applicationDirPath();
     return app.exec();
 }
