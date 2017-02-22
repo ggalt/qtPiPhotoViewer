@@ -23,6 +23,8 @@ ApplicationWindow {
             console.log("Image2")
             mainWindow.state = "image2State"
         }
+        console.log("state switched to:",mainWindow.state)
+
         appWindow.imageStateSwitched()
     }
 
@@ -32,6 +34,7 @@ ApplicationWindow {
         } else {
             mainWindow.image1Source = imageSource
         }
+        console.log("image source loaded", imageSource)
     }
 
     Timer {

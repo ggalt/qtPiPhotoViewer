@@ -17,10 +17,15 @@ Item {
             }
 
             PropertyChanges {
-                target: image3
-                fillMode: Image.PreserveAspectCrop
-                opacity: 1
+                target: image2
+                opacity: 0
             }
+
+//            PropertyChanges {
+//                target: image3
+//                fillMode: Image.PreserveAspectCrop
+//                opacity: 1
+//            }
 
         },
         State {
@@ -31,37 +36,69 @@ Item {
                 fillMode: Image.PreserveAspectFit
                 opacity: 1
             }
+            PropertyChanges {
+                target: image1
+                opacity: 0
+            }
+
         }
     ]
 
-    transitions: Transition {
+    transitions: [ Transition {
         from: "image1State"
         to: "image2State"
         SequentialAnimation {
             NumberAnimation {
                 easing.type: Easing.InCirc
-                property: "width"
+                property: "opacity"
                 duration: 200
+                from: 1
                 to: 0
                 target: image1
             }
 
             NumberAnimation {
                 target: image2
-                property: "width"
+                property: "opacity"
                 duration: 200
                 from: 0
+                to: 1
                 easing.type: Easing.OutCirc
             }
         }
-    }
+    },
+        Transition {
+                from: "image2State"
+                to: "image1State"
+                SequentialAnimation {
+                    NumberAnimation {
+                        easing.type: Easing.InCirc
+                        property: "opacity"
+                        duration: 200
+                        from: 1
+                        to: 0
+                        target: image2
+                    }
 
-    FastBlur {
-        id: backgroundBlur
-        anchors.fill: image3
-        source: image3
-        radius: 50
-    }
+                    NumberAnimation {
+                        target: image1
+                        property: "opacity"
+                        duration: 200
+                        from: 0
+                        to: 1
+                        easing.type: Easing.OutCirc
+                    }
+                }
+            }
+    ]
+
+//    FastBlur {
+//        id: backgroundBlur
+//        anchors.fill: image3
+//        source: image3
+//        radius: 50
+//        opacity: 1
+//    }
 
     DropShadow {
         id: imageDropShadow
@@ -100,21 +137,21 @@ Item {
         autoTransform: true
     }
 
-    Image {
-        id: image3
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-        source: image1Source
-        autoTransform: true
-    }
+//    Image {
+//        id: image3
+//        anchors.fill: parent
+//        fillMode: Image.PreserveAspectCrop
+//        source: image1Source
+//        autoTransform: true
+//    }
 
-    Image {
-        id: image4
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-        opacity: 0
-        source: image2Source
-        autoTransform: true
-    }
+//    Image {
+//        id: image4
+//        anchors.fill: parent
+//        fillMode: Image.PreserveAspectCrop
+//        opacity: 0
+//        source: image2Source
+//        autoTransform: true
+//    }
 
 }
