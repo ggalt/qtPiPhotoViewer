@@ -7,12 +7,9 @@
 #include <QQmlContext>
 #include <QDebug>
 #include <QString>
-#include <QStringList>
-#include <QDir>
-#include <QUrl>
 #include <QVariant>
 
-#include "myimageprovider.h"
+#include "imagefiles.h"
 
 class myApplicationWindow : public QObject
 {
@@ -21,23 +18,17 @@ public:
     explicit myApplicationWindow(QObject *parent = 0);
 
     void Init(void);
-    void ReadImageURLs(void);
 
 signals:
 
 public slots:
-    void NextImage(void);
 
 private:
     QQmlApplicationEngine engine;
     QQmlComponent *mainComponent;
-    MyImageProvider *imageProvider;
     QObject* appWindow;
 
-    QStringList photoUrlList;
-    int imageCount;
-    int imagePointer;
-    QDir topDir;
+    imageFiles *myImages;
 };
 
 #endif // MYAPPLICATIONWINDOW_H

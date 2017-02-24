@@ -4,7 +4,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     myimageprovider.cpp \
-    myapplicationwindow.cpp
+    myapplicationwindow.cpp \
+    imagefiles.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,4 +19,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     myimageprovider.h \
-    myapplicationwindow.h
+    myapplicationwindow.h \
+    imagefiles.h
