@@ -104,21 +104,19 @@ Item {
             from: ""
             to: "fadeIn"
 
-
-            NumberAnimation {
-                id: fadeInAnimation
-                target: backgroundBlur
-                property: "opacity"
-                duration: 200
-                easing.type: Easing.InOutQuad
-//                onStarted: console.log("starting fadeIn")
-//                onStopped: appWindow.setImageState("showNewImage")
-                onRunningChanged: {
-                    if(!fadeInAnimation.running) {
-                        appWindow.setImageState("showNewImage")
-                    }
+            SequentialAnimation {
+                NumberAnimation {
+                    id: fadeInAnimation
+                    target: backgroundBlur
+                    property: "opacity"
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+                ScriptAction {
+                    script: appWindow.setImageState("showNewImage")
                 }
             }
+
         },
         Transition {
             from: ""
@@ -135,19 +133,18 @@ Item {
         Transition {
             from: ""
             to: "hideOldImage"
-            onRunningChanged: {
-                if(!hideOldImageAnimation.running) {
-                    appWindow.setImageState("fadeOut")
-                }
-            }
 
-            NumberAnimation {
-                id: hideOldImageAnimation
-                target: foregroundImage
-                property: "opacity"
-                duration: 1000
-                easing.type: Easing.InOutQuad
-//                onStopped: appWindow.setImageState("fadeOut")
+            SequentialAnimation {
+                NumberAnimation {
+                    id: hideOldImageAnimation
+                    target: foregroundImage
+                    property: "opacity"
+                    duration: 1000
+                    easing.type: Easing.InOutQuad
+                }
+                ScriptAction{
+                    script: appWindow.setImageState("fadeOut")
+                }
             }
         },
         Transition {
