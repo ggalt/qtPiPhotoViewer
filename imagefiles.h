@@ -24,6 +24,7 @@ public:
 
     void ReadURLs(void);
     void setupImageProvider(QQmlEngine *eng);
+    void readImageURLsFromDisk(QDir d);
 
 signals:
 

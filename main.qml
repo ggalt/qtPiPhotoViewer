@@ -9,7 +9,15 @@ ApplicationWindow {
     width: 640
     height: 480
     property int showImageDuration: 5000    // 5 seconds (5000 milliseconds)
-    //    visibility: "FullScreen"
+//    visibility: "FullScreen"
+
+    function toggleFullScreen() {
+        console.log("****VISIBILITY IS:",appWindow.visibility)
+        if(appWindow.visibility===5)
+            appWindow.visibility="Windowed"
+        else
+            appWindow.visibility="FullScreen"
+    }
 
     function getImage() {
         return myImages.nextImage()
@@ -17,6 +25,11 @@ ApplicationWindow {
 
     function loadNextImage() {
         mainWindow.nextImage = myImages.nextImage()
+    }
+
+    function imageTimerStart() {
+        imageTimer.start()
+        console.log("starting image timeer")
     }
 
     Timer {
@@ -34,7 +47,7 @@ ApplicationWindow {
             loadNextImage()
         } else if(imgState === "showNewImage") {
             console.log(mainWindow.state)
-            imageTimer.start()
+            //            imageTimer.start()
         } else if(imgState === "hideOldImage") {
             console.log(mainWindow.state)
             imageTimer.stop()
@@ -55,6 +68,7 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
+        onDoubleClicked: appWindow.toggleFullScreen()
     }
 
 }

@@ -3,11 +3,10 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 
-Item {
+Rectangle {
     id: imagePage
     objectName: "imagePage"
-
-//    onStateChanged: myStageChange()
+    color: "black"
 
     Timer {
         id: startOffTimer
@@ -46,6 +45,7 @@ Item {
         samples: 17
         color: "#80000000"
         source: foregroundImage
+        opacity: 0
     }
 
     Image {
@@ -72,6 +72,10 @@ Item {
         State {
             name: "fadeIn"
             PropertyChanges {
+                target: imageDropShadow
+                opacity: 0
+            }
+            PropertyChanges {
                 target: backgroundBlur
                 opacity: 1
             }
@@ -79,19 +83,31 @@ Item {
         State {
             name: "showNewImage"
             PropertyChanges {
-                target: foregroundImage
+                target: imageDropShadow
+                opacity: 1
+            }
+            PropertyChanges {
+                target: backgroundBlur
                 opacity: 1
             }
         },
         State {
             name: "hideOldImage"
             PropertyChanges {
-                target: foregroundImage
+                target: imageDropShadow
                 opacity: 0
+            }
+            PropertyChanges {
+                target: backgroundBlur
+                opacity: 1
             }
         },
         State {
             name: "fadeOut"
+            PropertyChanges {
+                target: imageDropShadow
+                opacity: 0
+            }
             PropertyChanges {
                 target: backgroundBlur
                 opacity: 0
@@ -101,7 +117,7 @@ Item {
 
     transitions: [
         Transition {
-            from: ""
+            from: "*"
             to: "fadeIn"
 
             SequentialAnimation {
@@ -109,6 +125,8 @@ Item {
                     id: fadeInAnimation
                     target: backgroundBlur
                     property: "opacity"
+                    from: 0
+                    to: 1
                     duration: 200
                     easing.type: Easing.InOutQuad
                 }
@@ -119,19 +137,26 @@ Item {
 
         },
         Transition {
-            from: ""
+            from: "*"
             to: "showNewImage"
 
-            NumberAnimation {
-                id: showNewImageAnimation
-                target: foregroundImage
-                property: "opacity"
-                duration: 1000
-                easing.type: Easing.InOutQuad
+            SequentialAnimation {
+                NumberAnimation {
+                    id: showNewImageAnimation
+                    target: foregroundImage
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 1000
+                    easing.type: Easing.InOutQuad
+                }
+                ScriptAction {
+                    script: appWindow.imageTimerStart()
+                }
             }
         },
         Transition {
-            from: ""
+            from: "*"
             to: "hideOldImage"
 
             SequentialAnimation {
@@ -139,6 +164,8 @@ Item {
                     id: hideOldImageAnimation
                     target: foregroundImage
                     property: "opacity"
+                    from: 1
+                    to: 0
                     duration: 1000
                     easing.type: Easing.InOutQuad
                 }
@@ -148,21 +175,20 @@ Item {
             }
         },
         Transition {
-            from: ""
+            from: "*"
             to: "fadeOut"
-            onRunningChanged: {
-                if(!fadeOutAnimation.running) {
-                    appWindow.setImageState("fadeIn")
-                }
-            }
 
-            NumberAnimation {
-                id: fadeOutAnimation
-                target: backgroundBlur
-                property: "opacity"
-                duration: 200
-                easing.type: Easing.InOutQuad
-//                onStopped: appWindow.setImageState("fadeIn")
+            SequentialAnimation {
+                NumberAnimation {
+                    id: fadeOutAnimation
+                    target: backgroundBlur
+                    property: "opacity"
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+                ScriptAction {
+                    script: appWindow.setImageState("fadeIn")
+                }
             }
         }
     ]
