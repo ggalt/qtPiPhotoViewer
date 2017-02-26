@@ -8,7 +8,8 @@ imageFiles::imageFiles(QObject *parent) : QObject(parent)
 {
     imagePointer = 0;
 
-    qsrand(QDateTime::currentMSecsSinceEpoch());
+//    qsrand(QDateTime::currentMSecsSinceEpoch());
+    qsrand(5);
 }
 
 imageFiles::~imageFiles()
@@ -24,6 +25,8 @@ QString imageFiles::nextImage()
         imagesShown.insert(0, randNum % imageCount);
     } else {
         imagePointer--;
+        if(imagePointer < 0)
+            imagePointer = 0;
     }
 
     QString imageURL = "image://myImageProvider/"+photoUrlList.at(
@@ -35,6 +38,9 @@ QString imageFiles::nextImage()
 QString imageFiles::previousImage()
 {
     imagePointer++;
+    if(imagePointer >= imagesShown.size())
+        imagePointer = imagesShown.size()-1;
+
     QString imageURL = "image://myImageProvider/"+photoUrlList.at(
                 imagesShown.at(imagePointer));
     qDebug() << imageURL;
@@ -50,13 +56,13 @@ void imageFiles::ReadURLs()
     //    photoUrlList.append("/home/ggalt/Pictures/2014-summer/DSC_3325.jpg");
     //    photoUrlList.append("/home/ggalt/Pictures/2014-summer/P1000417.JPG");
     //    photoUrlList.append("/home/ggalt/Pictures/2014-summer/P1000504.JPG");
-//    readImageURLsFromDisk(QDir("/home/ggalt/Pictures/"));
+    readImageURLsFromDisk(QDir("/home/ggalt/Pictures/"));
 
     //// Main
-    photoUrlList.append("/home/ggalt/Pictures/2006-Summer/IMG_0430.JPG");
-    photoUrlList.append("/home/ggalt/Pictures/2006-Summer/IMG_0431.JPG");
-    photoUrlList.append("'/home/ggalt/Pictures/2015/Hawaii and California/DSC_0611.JPG'");
-    photoUrlList.append("/home/ggalt/Pictures/OldPhotos/DSC_0688.JPG");
+//    photoUrlList.append("/home/ggalt/Pictures/2006-Summer/IMG_0430.JPG");
+//    photoUrlList.append("/home/ggalt/Pictures/2006-Summer/IMG_0431.JPG");
+//    photoUrlList.append("'/home/ggalt/Pictures/2015/Hawaii and California/DSC_0611.JPG'");
+//    photoUrlList.append("/home/ggalt/Pictures/OldPhotos/DSC_0688.JPG");
 //    readImageURLsFromDisk(QDir("/home/ggalt/Pictures/"));
 
     //    photoUrlList.append("/home/ggalt/Pictures/2013_07_Hawaii/G0010093ww.JPG");

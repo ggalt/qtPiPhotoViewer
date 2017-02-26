@@ -21,8 +21,8 @@ Rectangle {
 
     Image {
         id: backgroundImage
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         source: currentImage
         autoTransform: true
         opacity: 0
@@ -72,7 +72,7 @@ Rectangle {
         State {
             name: "fadeIn"
             PropertyChanges {
-                target: imageDropShadow
+                target: foregroundImage
                 opacity: 0
             }
             PropertyChanges {
@@ -83,7 +83,7 @@ Rectangle {
         State {
             name: "showNewImage"
             PropertyChanges {
-                target: imageDropShadow
+                target: foregroundImage
                 opacity: 1
             }
             PropertyChanges {
@@ -94,7 +94,7 @@ Rectangle {
         State {
             name: "hideOldImage"
             PropertyChanges {
-                target: imageDropShadow
+                target: foregroundImage
                 opacity: 0
             }
             PropertyChanges {
@@ -105,7 +105,7 @@ Rectangle {
         State {
             name: "fadeOut"
             PropertyChanges {
-                target: imageDropShadow
+                target: foregroundImage
                 opacity: 0
             }
             PropertyChanges {
@@ -121,6 +121,10 @@ Rectangle {
             to: "fadeIn"
 
             SequentialAnimation {
+//                ScriptAction {
+//                    script: console.log("at transition fadeIn")
+//                }
+
                 NumberAnimation {
                     id: fadeInAnimation
                     target: backgroundBlur
@@ -141,15 +145,27 @@ Rectangle {
             to: "showNewImage"
 
             SequentialAnimation {
-                NumberAnimation {
-                    id: showNewImageAnimation
-                    target: foregroundImage
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: 1000
-                    easing.type: Easing.InOutQuad
+                ParallelAnimation {
+                    NumberAnimation {
+                        id: showNewImageAnimation
+                        target: foregroundImage
+                        property: "opacity"
+                        from: 0
+                        to: 1
+                        duration: 1000
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: imageDropShadow
+                        property: "opacity"
+                        duration: 1000
+                        from: 0
+                        to: 1
+                        easing.type: Easing.InOutQuad
+                    }
                 }
+
                 ScriptAction {
                     script: appWindow.imageTimerStart()
                 }
@@ -160,15 +176,27 @@ Rectangle {
             to: "hideOldImage"
 
             SequentialAnimation {
-                NumberAnimation {
-                    id: hideOldImageAnimation
-                    target: foregroundImage
-                    property: "opacity"
-                    from: 1
-                    to: 0
-                    duration: 1000
-                    easing.type: Easing.InOutQuad
+                ParallelAnimation {
+                    NumberAnimation {
+                        id: hideOldImageAnimation
+                        target: foregroundImage
+                        property: "opacity"
+                        from: 1
+                        to: 0
+                        duration: 1000
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: imageDropShadow
+                        property: "opacity"
+                        duration: 1000
+                        from: 1
+                        to: 0
+                        easing.type: Easing.InOutQuad
+                    }
                 }
+
                 ScriptAction{
                     script: appWindow.setImageState("fadeOut")
                 }
