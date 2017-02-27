@@ -100,9 +100,9 @@ ApplicationWindow {
         anchors.fill: parent
         onDoubleClicked: appWindow.toggleFullScreen()
         onClicked: {
-            if(mouseX < Screen.width / 2) {     // we clicked on the left so we want to back up
+            if(mouseX < Screen.width / 4) {     // we clicked on the left so we want to back up
                 goToImage("previous")
-            } else {
+            } else if(mouseX > 3*Screen.width / 4){
                 goToImage("next")
             }
         }

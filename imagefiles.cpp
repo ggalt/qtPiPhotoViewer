@@ -77,9 +77,9 @@ void imageFiles::ReadURLs()
 //    photoUrlList.append("C:/Users/ggalt66/Pictures/Desktop Images/DSC_0759");
 //    photoUrlList.append("C:/Users/ggalt66/Pictures/Desktop Images/DSC_1656");
 //    photoUrlList.append("C:/Users/ggalt66/Pictures/Desktop Images/DSC_0738");
-//    readImageURLsFromDisk(QDir("C:/Users/ggalt66/Pictures/"));
+    readImageURLsFromDisk(QDir("C:/Users/ggalt66/Pictures/"));
     // Windows Desktop
-    readImageURLsFromDisk(QDir("C:/Users/George Galt/Pictures"));
+//    readImageURLsFromDisk(QDir("C:/Users/George Galt/Pictures"));
 #endif
     imageCount = photoUrlList.size();
 

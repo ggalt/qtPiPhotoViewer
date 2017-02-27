@@ -131,7 +131,7 @@ Rectangle {
                     property: "opacity"
                     from: 0
                     to: 1
-                    duration: 200
+                    duration: 600
                     easing.type: Easing.InOutQuad
                 }
                 ScriptAction {
@@ -211,7 +211,7 @@ Rectangle {
                     id: fadeOutAnimation
                     target: backgroundBlur
                     property: "opacity"
-                    duration: 200
+                    duration: 600
                     easing.type: Easing.InOutQuad
                 }
                 ScriptAction {
