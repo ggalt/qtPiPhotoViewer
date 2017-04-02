@@ -44,14 +44,16 @@ ApplicationWindow {
         console.log("starting image timeer")
     }
 
+    // trying to make a simultaneous cross-fade between old and new backgrounds
     function setImageState(imgState) {
         mainWindow.state = imgState
         console.log("main.qml function setting mainWindow state to:", imgState)
         if(imgState === "fadeIn") {
-            mainWindow.currentImage = mainWindow.nextImage
+//            mainWindow.currentImage = mainWindow.nextImage
             loadNextImage()
 
         } else if(imgState === "showNewImage") {
+            mainWindow.oldImage = mainWindow.currentImage
             console.log(mainWindow.state)
             //            imageTimer.start()
 
@@ -59,7 +61,8 @@ ApplicationWindow {
             console.log(mainWindow.state)
             imageTimer.stop()
 
-        } else if(imgState === "fadeOut") {
+        } else if(imgState === "fadeOut") { // swap
+            mainWindow.currentImage = mainWindow.nextImage
             console.log(mainWindow.state)
 
         } else {
@@ -68,6 +71,31 @@ ApplicationWindow {
 
         }
     }
+    /// original function when we were allowing a period of black between backgrounds
+//    function setImageState(imgState) {
+//        mainWindow.state = imgState
+//        console.log("main.qml function setting mainWindow state to:", imgState)
+//        if(imgState === "fadeIn") {
+//            mainWindow.currentImage = mainWindow.nextImage
+//            loadNextImage()
+
+//        } else if(imgState === "showNewImage") {
+//            console.log(mainWindow.state)
+//            //            imageTimer.start()
+
+//        } else if(imgState === "hideOldImage") {
+//            console.log(mainWindow.state)
+//            imageTimer.stop()
+
+//        } else if(imgState === "fadeOut") {
+//            console.log(mainWindow.state)
+
+//        } else {
+//            console.log(mainWindow.state)
+//            console.error("UNDEFINED STATE")
+
+//        }
+//    }
 
     function goToImage(direction) {
         imageTimer.stop()
@@ -88,10 +116,9 @@ ApplicationWindow {
 
     MainPage {
         id: mainWindow
-        property string firstBackgroundImage: ""
-        property string secondBackgroundImage: ""
-        property string currentImage: ""
-        property string nextImage: appWindow.getImage()
+        property string currentImage: appWindow.getImage()
+        property string nextImage: ""
+        property string oldImage: ""
         property bool isFirstImage: true
         anchors.fill: parent
     }

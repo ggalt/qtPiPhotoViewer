@@ -1,4 +1,5 @@
 #include "myimageprovider.h"
+#include <QImageReader>
 
 MyImageProvider::MyImageProvider(QQmlImageProviderBase::ImageType type,
                                  QQmlImageProviderBase::Flags flags)
@@ -15,7 +16,17 @@ MyImageProvider::~MyImageProvider()
 QImage MyImageProvider::requestImage(const QString &id,
                                      QSize *size, const QSize &requestedSize)
 {
-    QImage initImage(id);
+    qDebug() << "image id ==" << id;
+    QImageReader imgReader(id);
+    imgReader.setAutoTransform(true);
+    QImage initImage = imgReader.read();
+
+    if(initImage.isNull()) {    // error in getting image
+        qDebug() << "Image read error:" << imgReader.errorString();
+        initImage = QImage(requestedSize,QImage::Format_ARGB32);
+        initImage.fill(Qt::lightGray);
+    }
+
     QImage retVal;
 
     if(requestedSize.isValid()) {

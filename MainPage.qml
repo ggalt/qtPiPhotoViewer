@@ -20,7 +20,7 @@ Rectangle {
     }
 
     Image {
-        id: backgroundImage
+        id: newBackgroundImage
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         source: currentImage
@@ -29,9 +29,26 @@ Rectangle {
     }
 
     FastBlur {
-        id: backgroundBlur
-        anchors.fill: backgroundImage
-        source: backgroundImage
+        id: newBackgroundBlur
+        anchors.fill: newBackgroundImage
+        source: newBackgroundImage
+        radius: 50
+        opacity: 0
+    }
+
+    Image {
+        id: oldBackgroundImage
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: oldImage
+        autoTransform: true
+        opacity: 0
+    }
+
+    FastBlur {
+        id: oldBackgroundBlur
+        anchors.fill: oldBackgroundImage
+        source: oldBackgroundImage
         radius: 50
         opacity: 0
     }
@@ -76,8 +93,12 @@ Rectangle {
                 opacity: 0
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: newBackgroundBlur
                 opacity: 1
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
+                opacity: 0
             }
         },
         State {
@@ -87,8 +108,12 @@ Rectangle {
                 opacity: 1
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: newBackgroundBlur
                 opacity: 1
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
+                opacity: 0
             }
         },
         State {
@@ -98,8 +123,12 @@ Rectangle {
                 opacity: 0
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: newBackgroundBlur
                 opacity: 1
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
+                opacity: 0
             }
         },
         State {
@@ -109,7 +138,11 @@ Rectangle {
                 opacity: 0
             }
             PropertyChanges {
-                target: backgroundBlur
+                target: newBackgroundBlur
+                opacity: 0
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
                 opacity: 0
             }
         }
@@ -127,7 +160,7 @@ Rectangle {
 
                 NumberAnimation {
                     id: fadeInAnimation
-                    target: backgroundBlur
+                    target: newBackgroundBlur
                     property: "opacity"
                     from: 0
                     to: 1
@@ -209,7 +242,7 @@ Rectangle {
             SequentialAnimation {
                 NumberAnimation {
                     id: fadeOutAnimation
-                    target: backgroundBlur
+                    target: newBackgroundBlur
                     property: "opacity"
                     duration: 600
                     easing.type: Easing.InOutQuad

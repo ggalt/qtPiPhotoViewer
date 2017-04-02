@@ -8,8 +8,8 @@ imageFiles::imageFiles(QObject *parent) : QObject(parent)
 {
     imagePointer = 0;
 
-//    qsrand(QDateTime::currentMSecsSinceEpoch());
-    qsrand(5);
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+//    qsrand(5);
 }
 
 imageFiles::~imageFiles()
@@ -96,13 +96,13 @@ void imageFiles::readImageURLsFromDisk(QDir d)
     photoUrlList.clear();
     QDirIterator it(d, QDirIterator::Subdirectories);
     while (it.hasNext()) {
+        it.next();
         if( it.fileInfo().isFile() ) {
             QString entry = it.fileInfo().absoluteFilePath();
             if( entry.contains(".JPG") || entry.contains(".jpg")) {
                 photoUrlList.append(entry);
             }
         }
-        it.next();
     }
     imageCount = photoUrlList.count();
     qDebug() << imageCount << photoUrlList.at(0);
