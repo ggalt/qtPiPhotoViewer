@@ -4,5 +4,6 @@
         <file>MainPage.qml</file>
         <file>images/DSC06069.JPG</file>
         <file>images/DSC06092.JPG</file>
+        <file>SettingsDialog.qml</file>
     </qresource>
 </RCC>

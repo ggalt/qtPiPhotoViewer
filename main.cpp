@@ -7,6 +7,11 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    QCoreApplication::setOrganizationName("GeorgeGalt");
+    QCoreApplication::setOrganizationDomain("georgegalt.com");
+    QCoreApplication::setApplicationName("qtPiPhotoViewer");
+
     QGuiApplication app(argc, argv);
 
     myApplicationWindow win;
