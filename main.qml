@@ -11,6 +11,8 @@ ApplicationWindow {
     height: 480
     property int showImageDuration: 5000    // 5 seconds (5000 milliseconds)
     property bool movingForward: true
+    property int blurValue: 20
+    property string pictureHome: ""
 
 
 //    visibility: "FullScreen"
@@ -46,6 +48,7 @@ ApplicationWindow {
 
     // trying to make a simultaneous cross-fade between old and new backgrounds
     function setImageState(imgState) {
+        console.log("location of pictures is:", pictureHome)
         mainWindow.state = imgState
         console.log("main.qml function setting mainWindow state to:", imgState)
         if(imgState === "fadeIn") {

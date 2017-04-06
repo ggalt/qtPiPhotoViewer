@@ -11,6 +11,11 @@ Item {
     SystemPalette { id: palette }
     clip: true
 
+    FileDialog {
+        id: dlgImageFolder
+        folder: appWindow.pictureHome
+    }
+
     Dialog {
         id: helloDialog
         modality: dialogModal.checked ? Qt.WindowModal : Qt.NonModal

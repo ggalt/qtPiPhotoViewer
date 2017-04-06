@@ -32,7 +32,7 @@ Rectangle {
         id: newBackgroundBlur
         anchors.fill: newBackgroundImage
         source: newBackgroundImage
-        radius: 50
+        radius: appWindow.blurValue
         opacity: 0
     }
 
