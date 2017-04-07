@@ -1,6 +1,8 @@
 #include <QDirIterator>
+#include <QSettings>
 #include <QDebug>
 #include <QDateTime>
+#include <QStandardPaths>
 
 #include "imagefiles.h"
 
@@ -93,6 +95,7 @@ void imageFiles::setupImageProvider(QQmlEngine *eng)
 
 void imageFiles::readImageURLsFromDisk(QDir d)
 {
+    qDebug() << "Image URL:" << d;
     photoUrlList.clear();
     QDirIterator it(d, QDirIterator::Subdirectories);
     while (it.hasNext()) {

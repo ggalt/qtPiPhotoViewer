@@ -110,6 +110,20 @@ ApplicationWindow {
         appWindow.setImageState("fadeIn")
     }
 
+    function loadSettingsDialog() {
+        Qt.createComponent("SettingsDialog.qml").createObject(appWindow,{})
+    }
+
+    function changeSettings(newBlurValue, newDurationValue, newURL) {
+        if(newBlurValue > 0)
+            blurValue = newBlurValue
+        if(newDurationValue > 0)
+            showImageDuration = newDurationValue * 1000
+        if(newURL!= "") {
+            pictureHome = newURL
+        }
+    }
+
     Timer {
         id: imageTimer
         interval: showImageDuration
@@ -128,7 +142,8 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
-        onDoubleClicked: appWindow.toggleFullScreen()
+        onDoubleClicked: loadSettingsDialog() //launch settings dialog
+        onPressAndHold: appWindow.toggleFullScreen()
         onClicked: {
             if(mouseX < Screen.width / 4) {     // we clicked on the left so we want to back up
                 goToImage("previous")

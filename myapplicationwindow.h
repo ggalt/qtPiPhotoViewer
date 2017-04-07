@@ -16,6 +16,7 @@ class myApplicationWindow : public QObject
     Q_OBJECT
 public:
     explicit myApplicationWindow(QObject *parent = 0);
+    ~myApplicationWindow(void);
 
     void Init(void);
 
@@ -27,6 +28,10 @@ private:
     QQmlApplicationEngine engine;
     QQmlComponent *mainComponent;
     QObject* appWindow;
+
+    QString pictureDirectory;
+    int blurValue;
+    int displayDuration;
 
     imageFiles *myImages;
 };
