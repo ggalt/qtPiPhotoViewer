@@ -2,8 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainPage.qml</file>
-        <file>images/DSC06069.JPG</file>
-        <file>images/DSC06092.JPG</file>
         <file>SettingsDialog.qml</file>
+        <file>images/black.png</file>
+        <file>images/noimage.png</file>
     </qresource>
 </RCC>

@@ -80,73 +80,124 @@ Rectangle {
 
     states: [
         State {
-            name: "blackOut"
+            name: "Initialize"
             PropertyChanges {
                 target: startOffTimer
                 running: true
             }
+            PropertyChanges {
+                target: foregroundImage
+                source: "qrc:/images/black.png"
+            }
+            PropertyChanges {
+                target: newBackgroundImage
+                source: "qrc:/images/black.png"
+            }
+            PropertyChanges {
+                target: oldBackgroundImage
+                source: "qrc:/images/black.png"
+            }
         },
+
+        // Image should be faded out and we should be mid-transition between backgrounds
         State {
-            name: "fadeIn"
+            name: "ImageOut"
+            PropertyChanges {
+                target: newBackgroundBlur
+                opacity: appWindow.backgroundOpacity / 2
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
+                opacity: appWindow.backgroundOpacity / 2
+            }
             PropertyChanges {
                 target: foregroundImage
                 opacity: 0
             }
             PropertyChanges {
-                target: newBackgroundBlur
-                opacity: appWindow.backgroundOpacity
-            }
-            PropertyChanges {
-                target: oldBackgroundBlur
+                target: imageDropShadow
                 opacity: 0
             }
         },
+
         State {
-            name: "showNewImage"
+            name: "ImageSwitch"
             PropertyChanges {
                 target: foregroundImage
-                opacity: 1
-            }
-            PropertyChanges {
-                target: newBackgroundBlur
-                opacity: appWindow.backgroundOpacity
-            }
-            PropertyChanges {
-                target: oldBackgroundBlur
-                opacity: 0
-            }
-        },
-        State {
-            name: "hideOldImage"
-            PropertyChanges {
-                target: foregroundImage
-                opacity: 0
-            }
-            PropertyChanges {
-                target: newBackgroundBlur
-                opacity: 0
-            }
-            PropertyChanges {
-                target: oldBackgroundBlur
-                opacity: appWindow.backgroundOpacity
-            }
-        },
-        State {
-            name: "fadeOut"
-            PropertyChanges {
-                target: foregroundImage
-                opacity: 0
-            }
-            PropertyChanges {
-                target: newBackgroundBlur
-                opacity: 0
-            }
-            PropertyChanges {
-                target: oldBackgroundBlur
-                opacity: 0
+                source: currentImage
             }
         }
     ]
+
+//    states: [
+//        State {
+//            name: "blackOut"
+//            PropertyChanges {
+//                target: startOffTimer
+//                running: true
+//            }
+//        },
+//        State {
+//            name: "fadeIn"
+//            PropertyChanges {
+//                target: foregroundImage
+//                opacity: 0
+//            }
+//            PropertyChanges {
+//                target: newBackgroundBlur
+//                opacity: appWindow.backgroundOpacity
+//            }
+//            PropertyChanges {
+//                target: oldBackgroundBlur
+//                opacity: 0
+//            }
+//        },
+//        State {
+//            name: "showNewImage"
+//            PropertyChanges {
+//                target: foregroundImage
+//                opacity: 1
+//            }
+//            PropertyChanges {
+//                target: newBackgroundBlur
+//                opacity: appWindow.backgroundOpacity
+//            }
+//            PropertyChanges {
+//                target: oldBackgroundBlur
+//                opacity: 0
+//            }
+//        },
+//        State {
+//            name: "hideOldImage"
+//            PropertyChanges {
+//                target: foregroundImage
+//                opacity: 0
+//            }
+//            PropertyChanges {
+//                target: newBackgroundBlur
+//                opacity: 0
+//            }
+//            PropertyChanges {
+//                target: oldBackgroundBlur
+//                opacity: appWindow.backgroundOpacity
+//            }
+//        },
+//        State {
+//            name: "fadeOut"
+//            PropertyChanges {
+//                target: foregroundImage
+//                opacity: 0
+//            }
+//            PropertyChanges {
+//                target: newBackgroundBlur
+//                opacity: 0
+//            }
+//            PropertyChanges {
+//                target: oldBackgroundBlur
+//                opacity: 0
+//            }
+//        }
+//    ]
 
     transitions: [
         Transition {
