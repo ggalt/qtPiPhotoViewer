@@ -49,7 +49,7 @@ Rectangle {
         id: oldBackgroundBlur
         anchors.fill: oldBackgroundImage
         source: oldBackgroundImage
-        radius: 50
+        radius: appWindow.blurValue
         opacity: 0
     }
 
@@ -94,7 +94,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: newBackgroundBlur
-                opacity: 1
+                opacity: appWindow.backgroundOpacity
             }
             PropertyChanges {
                 target: oldBackgroundBlur
@@ -109,7 +109,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: newBackgroundBlur
-                opacity: 1
+                opacity: appWindow.backgroundOpacity
             }
             PropertyChanges {
                 target: oldBackgroundBlur
@@ -124,11 +124,11 @@ Rectangle {
             }
             PropertyChanges {
                 target: newBackgroundBlur
-                opacity: 1
+                opacity: 0
             }
             PropertyChanges {
                 target: oldBackgroundBlur
-                opacity: 0
+                opacity: appWindow.backgroundOpacity
             }
         },
         State {
@@ -154,19 +154,29 @@ Rectangle {
             to: "fadeIn"
 
             SequentialAnimation {
-//                ScriptAction {
-//                    script: console.log("at transition fadeIn")
-//                }
+                ParallelAnimation {
+                    NumberAnimation {
+                        id: fadeInAnimation
+                        target: newBackgroundBlur
+                        property: "opacity"
+                        from: 0
+//                        to: 1
+                        duration: appWindow.backgroundTransitionDuration
+                        easing.type: Easing.InQuad
+                    }
 
-                NumberAnimation {
-                    id: fadeInAnimation
-                    target: newBackgroundBlur
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: 600
-                    easing.type: Easing.InOutQuad
+                    NumberAnimation {
+                        id: fadeOutAnimation
+                        target: oldBackgroundBlur
+                        property: "opacity"
+//                        from: 1
+                        to: 0
+                        duration: appWindow.backgroundTransitionDuration
+                        easing.type: Easing.OutQuad
+                    }
+
                 }
+
                 ScriptAction {
                     script: appWindow.setImageState("showNewImage")
                 }
@@ -185,17 +195,17 @@ Rectangle {
                         property: "opacity"
                         from: 0
                         to: 1
-                        duration: 1000
-                        easing.type: Easing.InOutQuad
+                        duration: appWindow.imageFadeDuration
+                        easing.type: Easing.OutQuad
                     }
 
                     NumberAnimation {
                         target: imageDropShadow
                         property: "opacity"
-                        duration: 1000
+                        duration: appWindow.imageFadeDuration
                         from: 0
                         to: 1
-                        easing.type: Easing.InOutQuad
+                        easing.type: Easing.OutQuad
                     }
                 }
 
@@ -216,41 +226,42 @@ Rectangle {
                         property: "opacity"
                         from: 1
                         to: 0
-                        duration: 1000
-                        easing.type: Easing.InOutQuad
+                        duration: appWindow.imageFadeDuration
+                        easing.type: Easing.InQuad
                     }
 
                     NumberAnimation {
                         target: imageDropShadow
                         property: "opacity"
-                        duration: 1000
+                        duration: appWindow.imageFadeDuration
                         from: 1
                         to: 0
-                        easing.type: Easing.InOutQuad
+                        easing.type: Easing.InQuad
                     }
                 }
 
                 ScriptAction{
-                    script: appWindow.setImageState("fadeOut")
-                }
-            }
-        },
-        Transition {
-            from: "*"
-            to: "fadeOut"
-
-            SequentialAnimation {
-                NumberAnimation {
-                    id: fadeOutAnimation
-                    target: newBackgroundBlur
-                    property: "opacity"
-                    duration: 600
-                    easing.type: Easing.InOutQuad
-                }
-                ScriptAction {
                     script: appWindow.setImageState("fadeIn")
                 }
             }
         }
+//        },
+//        Transition {
+//            from: "*"
+//            to: "fadeOut"
+
+//            SequentialAnimation {
+//                NumberAnimation {
+//                    id: fadeOutAnimation
+//                    target: newBackgroundBlur
+//                    property: "opacity"
+//                    duration: 600
+//                    easing.type: Easing.InOutQuad
+//                }
+//                ScriptAction {
+//                    script: appWindow.setImageState("fadeIn")
+//                }
+//            }
+//        }
     ]
 }

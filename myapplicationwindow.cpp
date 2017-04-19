@@ -38,8 +38,8 @@ void myApplicationWindow::Init()
     myImages->readImageURLsFromDisk(d);
 //    myImages->ReadURLs();
     engine.rootContext()->setContextProperty("myImages", myImages);
-    appWindow->setProperty("showImageDuration", 2000);
-    appWindow->setProperty("blurValue",50);
+    appWindow->setProperty("showImageDuration", 4000);
+    appWindow->setProperty("blurValue",99);
     appWindow->setProperty("pictureHome", pictureHomeDir);
 
 

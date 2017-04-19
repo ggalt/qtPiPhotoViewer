@@ -10,9 +10,13 @@ ApplicationWindow {
     width: 640
     height: 480
     property int showImageDuration: 5000    // 5 seconds (5000 milliseconds)
-    property bool movingForward: true
-    property int blurValue: 20
+    property int imageFadeDuration: 2000
+    property int backgroundTransitionDuration: 3000
+    property real backgroundOpacity: 0.75
+    property int blurValue: 5
     property string pictureHome: ""
+    property bool movingForward: true
+
 
 
 //    visibility: "FullScreen"
@@ -48,11 +52,12 @@ ApplicationWindow {
 
     // trying to make a simultaneous cross-fade between old and new backgrounds
     function setImageState(imgState) {
-        console.log("location of pictures is:", pictureHome)
+
         mainWindow.state = imgState
         console.log("main.qml function setting mainWindow state to:", imgState)
+
         if(imgState === "fadeIn") {
-//            mainWindow.currentImage = mainWindow.nextImage
+            mainWindow.currentImage = mainWindow.nextImage
             loadNextImage()
 
         } else if(imgState === "showNewImage") {
@@ -63,9 +68,10 @@ ApplicationWindow {
         } else if(imgState === "hideOldImage") {
             console.log(mainWindow.state)
             imageTimer.stop()
+//            mainWindow.currentImage = mainWindow.nextImage
 
         } else if(imgState === "fadeOut") { // swap
-            mainWindow.currentImage = mainWindow.nextImage
+//            mainWindow.currentImage = mainWindow.nextImage
             console.log(mainWindow.state)
 
         } else {
@@ -115,6 +121,7 @@ ApplicationWindow {
     }
 
     function changeSettings(newBlurValue, newDurationValue, newURL) {
+        console.log("blur:",newBlurValue,"duration:",newDurationValue,"URL:",newURL)
         if(newBlurValue > 0)
             blurValue = newBlurValue
         if(newDurationValue > 0)

@@ -13,10 +13,11 @@ Item {
         easing.type: Easing.InOutQuad ; running: true }
 
     property string pictreFolderHome: ""
-    property int newBlurValue: 0
-    property int newDurationValue: 10
+    property int newBlurValue: appWindow.blurValue
+    property int newDurationValue: appWindow.showImageDuration / 1000
 
     function acceptNewValues() {
+        appWindow.changeSettings(newBlurValue,newDurationValue,pictreFolderHome)
         dialogComponent.destroy()
     }
 
@@ -126,6 +127,7 @@ Item {
             y: 40
             width: 80
             height: 20
+            maximumValue: 300
         }
 
         SpinBox {
