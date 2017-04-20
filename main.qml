@@ -161,7 +161,9 @@ ApplicationWindow {
         id: imageTimer
         interval: showImageDuration
         running: false
-        onTriggered: setImageState("ImageOut")
+        onTriggered: {
+            mainWindow.state = "ImageReset"
+        }
     }
 
     MainPage {
