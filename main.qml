@@ -51,35 +51,61 @@ ApplicationWindow {
     }
 
     // trying to make a simultaneous cross-fade between old and new backgrounds
+
     function setImageState(imgState) {
 
-        mainWindow.state = imgState
-        console.log("main.qml function setting mainWindow state to:", imgState)
-
-        if(imgState === "fadeIn") {
-            mainWindow.currentImage = mainWindow.nextImage
+        if(imgState==="Initialize") {
+            mainWindow.state = imgState
+            setImageState("ImageOut")
+        }
+        else if(imgState==="ImageOut") {
             loadNextImage()
-
-        } else if(imgState === "showNewImage") {
+            mainWindow.state = imgState
+        }
+        else if(imgState==="ImageSwitch") {
+            mainWindow.state = imgState
+            mainWindow.currentImage = mainWindow.nextImage
+        }
+        else if(imgState==="ImageIn") {
+            mainWindow.state = imgState
+        }
+        else if(imgState==="ImageDisplay") {
             mainWindow.oldImage = mainWindow.currentImage
-            console.log(mainWindow.state)
-            //            imageTimer.start()
-
-        } else if(imgState === "hideOldImage") {
-            console.log(mainWindow.state)
-            imageTimer.stop()
-//            mainWindow.currentImage = mainWindow.nextImage
-
-        } else if(imgState === "fadeOut") { // swap
-//            mainWindow.currentImage = mainWindow.nextImage
-            console.log(mainWindow.state)
-
-        } else {
-            console.log(mainWindow.state)
-            console.error("UNDEFINED STATE")
-
+            mainWindow.state = imgState
+        }
+        else {
+            console.log("HELP!! Unknown image state:", imgState)
         }
     }
+
+//    function setImageState(imgState) {
+//        mainWindow.state = imgState
+//        console.log("main.qml function setting mainWindow state to:", imgState)
+
+//        if(imgState === "fadeIn") {
+//            mainWindow.currentImage = mainWindow.nextImage
+//            loadNextImage()
+
+//        } else if(imgState === "showNewImage") {
+//            mainWindow.oldImage = mainWindow.currentImage
+//            console.log(mainWindow.state)
+//            //            imageTimer.start()
+
+//        } else if(imgState === "hideOldImage") {
+//            console.log(mainWindow.state)
+//            imageTimer.stop()
+////            mainWindow.currentImage = mainWindow.nextImage
+
+//        } else if(imgState === "fadeOut") { // swap
+////            mainWindow.currentImage = mainWindow.nextImage
+//            console.log(mainWindow.state)
+
+//        } else {
+//            console.log(mainWindow.state)
+//            console.error("UNDEFINED STATE")
+
+//        }
+//    }
     /// original function when we were allowing a period of black between backgrounds
 //    function setImageState(imgState) {
 //        mainWindow.state = imgState
@@ -113,7 +139,7 @@ ApplicationWindow {
         } else {
             movingForward = false
         }
-        appWindow.setImageState("fadeIn")
+        appWindow.setImageState("ImageOut")
     }
 
     function loadSettingsDialog() {
@@ -135,7 +161,7 @@ ApplicationWindow {
         id: imageTimer
         interval: showImageDuration
         running: false
-        onTriggered: setImageState("hideOldImage")
+        onTriggered: setImageState("ImageOut")
     }
 
     MainPage {

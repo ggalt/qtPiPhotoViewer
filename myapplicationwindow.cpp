@@ -44,7 +44,7 @@ void myApplicationWindow::Init()
 
 
     QVariant returnedValue;
-    QVariant msg = "blackOut";
+    QVariant msg = "Initialize";
     QMetaObject::invokeMethod(appWindow, "setImageState",
             Q_RETURN_ARG(QVariant, returnedValue),
             Q_ARG(QVariant, msg));
