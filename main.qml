@@ -22,7 +22,7 @@ ApplicationWindow {
 //    visibility: "FullScreen"
 
     function toggleFullScreen() {
-        console.log("****VISIBILITY IS:",appWindow.visibility)
+        // console.log("****VISIBILITY IS:",appWindow.visibility)
         if(appWindow.visibility===5)
             appWindow.visibility="Windowed"
         else
@@ -36,18 +36,18 @@ ApplicationWindow {
     function loadNextImage() {
         if(movingForward) {
             mainWindow.nextImage = myImages.nextImage()
-            console.log("Next Image")
+            // // console.log("Next Image")
         }
         else {
             mainWindow.nextImage = myImages.previousImage()
             movingForward = true
-            console.log("****LOADING PREVIOUS IMAGE***")
+            // console.log("****LOADING PREVIOUS IMAGE***")
         }
     }
 
     function imageTimerStart() {
         imageTimer.start()
-        console.log("starting image timeer")
+        // console.log("starting image timeer")
     }
 
     // trying to make a simultaneous cross-fade between old and new backgrounds
@@ -74,13 +74,13 @@ ApplicationWindow {
             mainWindow.state = imgState
         }
         else {
-            console.log("HELP!! Unknown image state:", imgState)
+            // console.log("HELP!! Unknown image state:", imgState)
         }
     }
 
 //    function setImageState(imgState) {
 //        mainWindow.state = imgState
-//        console.log("main.qml function setting mainWindow state to:", imgState)
+//        // console.log("main.qml function setting mainWindow state to:", imgState)
 
 //        if(imgState === "fadeIn") {
 //            mainWindow.currentImage = mainWindow.nextImage
@@ -88,20 +88,20 @@ ApplicationWindow {
 
 //        } else if(imgState === "showNewImage") {
 //            mainWindow.oldImage = mainWindow.currentImage
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            //            imageTimer.start()
 
 //        } else if(imgState === "hideOldImage") {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            imageTimer.stop()
 ////            mainWindow.currentImage = mainWindow.nextImage
 
 //        } else if(imgState === "fadeOut") { // swap
 ////            mainWindow.currentImage = mainWindow.nextImage
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 
 //        } else {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            console.error("UNDEFINED STATE")
 
 //        }
@@ -109,24 +109,24 @@ ApplicationWindow {
     /// original function when we were allowing a period of black between backgrounds
 //    function setImageState(imgState) {
 //        mainWindow.state = imgState
-//        console.log("main.qml function setting mainWindow state to:", imgState)
+//        // console.log("main.qml function setting mainWindow state to:", imgState)
 //        if(imgState === "fadeIn") {
 //            mainWindow.currentImage = mainWindow.nextImage
 //            loadNextImage()
 
 //        } else if(imgState === "showNewImage") {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            //            imageTimer.start()
 
 //        } else if(imgState === "hideOldImage") {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            imageTimer.stop()
 
 //        } else if(imgState === "fadeOut") {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 
 //        } else {
-//            console.log(mainWindow.state)
+//            // console.log(mainWindow.state)
 //            console.error("UNDEFINED STATE")
 
 //        }
@@ -147,7 +147,7 @@ ApplicationWindow {
     }
 
     function changeSettings(newBlurValue, newDurationValue, newURL) {
-        console.log("blur:",newBlurValue,"duration:",newDurationValue,"URL:",newURL)
+        // console.log("blur:",newBlurValue,"duration:",newDurationValue,"URL:",newURL)
         if(newBlurValue > 0)
             blurValue = newBlurValue
         if(newDurationValue > 0)
