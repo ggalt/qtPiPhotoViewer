@@ -43,7 +43,7 @@ Rectangle {
         source: newBackgroundImage
         radius: appWindow.blurValue
         opacity: 0
-        onOpacityChanged: console.log("NEW IMAGE BLUR OPACITY CHANGED TO:", newBackgroundBlur.opacity, "state is:", imagePage.state)
+//        onOpacityChanged: console.log("NEW IMAGE BLUR OPACITY CHANGED TO:", newBackgroundBlur.opacity, "state is:", imagePage.state)
     }
 
     Image {
@@ -184,11 +184,11 @@ Rectangle {
             }
             PropertyChanges {
                 target: newBackgroundBlur
-                opacity: 1
+                opacity: 0
             }
             PropertyChanges {
                 target: oldBackgroundBlur
-                opacity: 0
+                opacity: 1
             }
             PropertyChanges {
                 target: foregroundImage
@@ -202,7 +202,6 @@ Rectangle {
                 name: "ImageDisplayScript"
                 script: {
                     console.log("ImageDisplayScript")
-                    mainWindow.oldImage = mainWindow.currentImage
                     appWindow.loadNextImage()
                 }
             }
@@ -280,12 +279,14 @@ Rectangle {
                 NumberAnimation {
                     target: newBackgroundBlur
                     property: "opacity"
+                    to: 1
                     duration: appWindow.backgroundTransitionDuration/2
                     easing.type: Easing.OutQuad
                 }
                 NumberAnimation {
                     target: oldBackgroundBlur
                     property: "opacity"
+                    to: 0
                     duration: appWindow.backgroundTransitionDuration/2
                     easing.type: Easing.OutQuad
                 }
@@ -306,6 +307,7 @@ Rectangle {
             onRunningChanged: {
                 if((state=="ImageIn") && (!running)) {
                     console.log("ImageChangeScript")
+                    mainWindow.oldImage = mainWindow.currentImage
                     changeState("ImageDisplay")
                 }
             }
