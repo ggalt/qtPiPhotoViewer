@@ -11,9 +11,6 @@ Rectangle {
     function changeState(newState) {
         console.log("Current State:", state)
         console.log("New State:", newState)
-        console.log("opacity of image:", foregroundImage.opacity)
-        console.log("opacity of new background:", newBackgroundBlur.opacity)
-        console.log("opacity of old background:", oldBackgroundBlur.opacity)
         imagePage.state = newState
     }
 
@@ -65,11 +62,12 @@ Rectangle {
 
     DropShadow {
         id: imageDropShadow
-        horizontalOffset: 3
-        verticalOffset: 3
+        horizontalOffset: appWindow.shadowOffset
+        verticalOffset: appWindow.shadowOffset
         radius: 8.0
         anchors.fill: foregroundImage
         samples: 17
+        transparentBorder: true
         color: "#80000000"
         source: foregroundImage
         opacity: 0
@@ -78,10 +76,10 @@ Rectangle {
     Image {
         id: foregroundImage
         anchors.fill: parent
-        anchors.rightMargin: 10
-        anchors.leftMargin: 10
-        anchors.bottomMargin: 10
-        anchors.topMargin: 10
+        anchors.rightMargin: 10 + appWindow.shadowOffset
+        anchors.leftMargin: 10 + appWindow.shadowOffset
+        anchors.bottomMargin: 10 + appWindow.shadowOffset
+        anchors.topMargin: 10 + appWindow.shadowOffset
         fillMode: Image.PreserveAspectFit
         opacity: 0
         source: mainWindow.currentImage
@@ -224,6 +222,31 @@ Rectangle {
                 target: newBackgroundImage
                 source: mainWindow.nextImage
             }
+        },
+        State {
+            name: "ImageInterrupt"
+            PropertyChanges {
+                target: imageTimer
+                running: false
+            }
+            PropertyChanges {
+                target: oldBackgroundBlur
+                opacity: 1
+            }
+            PropertyChanges {
+                target: newBackgroundBlur
+                opacity: 0
+            }
+            PropertyChanges {
+                target: newBackgroundImage
+                source: mainWindow.nextImage
+            }
+            StateChangeScript {
+                name: "ImageInterruptScript"
+                script: {
+                    mainWindow.oldImage = mainWindow.currentImage
+                }
+            }
         }
     ]
 
@@ -324,6 +347,21 @@ Rectangle {
             to: "ImageReset"
             onRunningChanged: {
                 console.log("ImageResetScript")
+                changeState("ImageOut")
+            }
+        },
+        Transition {
+            from: "*"
+            to: "ImageInterrupt"
+
+            NumberAnimation {
+                targets: [newBackgroundBlur, oldBackgroundBlur, foregroundImage, imageDropShadow]
+                properties: "opacity"
+                duration: 100
+            }
+
+            onRunningChanged:  {
+                console.log("ImageInterruptScript")
                 changeState("ImageOut")
             }
         }

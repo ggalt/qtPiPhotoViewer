@@ -4,6 +4,10 @@
 #include <QSettings>
 #include <QVariant>
 
+#define DISPLAY_DURATION    10 * 1000
+#define TRANSITION_DURATION 4 * 1000
+#define BLUR_VALUE          99
+
 myApplicationWindow::myApplicationWindow(QObject *parent) : QObject(parent)
 {
 
@@ -15,6 +19,7 @@ myApplicationWindow::~myApplicationWindow()
     settings.setValue("blurValue", QVariant(blurValue));
     settings.setValue("displayDuration", QVariant(displayDuration));
     settings.setValue("pictureDirectory", QVariant(pictureDirectory));
+    settings.setValue("transitionDuration", QVariant(transitionDuration));
 }
 
 void myApplicationWindow::Init()
@@ -27,8 +32,9 @@ void myApplicationWindow::Init()
     QString pictureHomeDir = QStandardPaths::standardLocations(
                 QStandardPaths::PicturesLocation).first();
 
-    blurValue = settings.value("blurValue",50).toInt();
-    displayDuration = settings.value("displayDuration", 10000).toInt();
+    blurValue = settings.value("blurValue",BLUR_VALUE).toInt();
+    displayDuration = settings.value("displayDuration", DISPLAY_DURATION).toInt();
+    transitionDuration = settings.value("transitionDuration", TRANSITION_DURATION).toInt();
     pictureDirectory = settings.value("pictureDirectory", pictureHomeDir).toString();
 
     QDir d(pictureDirectory);
@@ -38,8 +44,9 @@ void myApplicationWindow::Init()
     myImages->readImageURLsFromDisk(d);
 //    myImages->ReadURLs();
     engine.rootContext()->setContextProperty("myImages", myImages);
-    appWindow->setProperty("showImageDuration", 4000);
-    appWindow->setProperty("blurValue",99);
+    appWindow->setProperty("showImageDuration", displayDuration);
+    appWindow->setProperty("transitionDuration", transitionDuration);
+    appWindow->setProperty("blurValue",blurValue);
     appWindow->setProperty("pictureHome", pictureHomeDir);
 
 

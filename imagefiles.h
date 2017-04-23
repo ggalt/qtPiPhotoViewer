@@ -11,6 +11,7 @@
 #include <QQmlEngine>
 
 #include "myimageprovider.h"
+#define IMAGE_BUF_SIZE 1024
 
 class imageFiles : public QObject
 {
@@ -36,6 +37,8 @@ private:
     int imageCount;
     int imagePointer;
     QList<int> imagesShown;
+    quint32 newImagesShown[IMAGE_BUF_SIZE];
+    int newImagePointer;
     QDir topDir;
 };
 

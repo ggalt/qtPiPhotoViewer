@@ -32,6 +32,7 @@ private:
     QString pictureDirectory;
     int blurValue;
     int displayDuration;
+    int transitionDuration;
 
     imageFiles *myImages;
 };

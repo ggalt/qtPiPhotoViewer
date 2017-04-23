@@ -13,13 +13,12 @@ ApplicationWindow {
     property int imageFadeDuration: 2000
     property int backgroundTransitionDuration: 3000
     property real backgroundOpacity: 0.75
-    property int blurValue: 5
+    property int blurValue: 99
+    property int shadowOffset: 4
     property string pictureHome: ""
     property bool movingForward: true
 
-
-
-//    visibility: "FullScreen"
+    visibility: "FullScreen"
 
     function toggleFullScreen() {
         // console.log("****VISIBILITY IS:",appWindow.visibility)
@@ -78,68 +77,14 @@ ApplicationWindow {
         }
     }
 
-//    function setImageState(imgState) {
-//        mainWindow.state = imgState
-//        // console.log("main.qml function setting mainWindow state to:", imgState)
-
-//        if(imgState === "fadeIn") {
-//            mainWindow.currentImage = mainWindow.nextImage
-//            loadNextImage()
-
-//        } else if(imgState === "showNewImage") {
-//            mainWindow.oldImage = mainWindow.currentImage
-//            // console.log(mainWindow.state)
-//            //            imageTimer.start()
-
-//        } else if(imgState === "hideOldImage") {
-//            // console.log(mainWindow.state)
-//            imageTimer.stop()
-////            mainWindow.currentImage = mainWindow.nextImage
-
-//        } else if(imgState === "fadeOut") { // swap
-////            mainWindow.currentImage = mainWindow.nextImage
-//            // console.log(mainWindow.state)
-
-//        } else {
-//            // console.log(mainWindow.state)
-//            console.error("UNDEFINED STATE")
-
-//        }
-//    }
-    /// original function when we were allowing a period of black between backgrounds
-//    function setImageState(imgState) {
-//        mainWindow.state = imgState
-//        // console.log("main.qml function setting mainWindow state to:", imgState)
-//        if(imgState === "fadeIn") {
-//            mainWindow.currentImage = mainWindow.nextImage
-//            loadNextImage()
-
-//        } else if(imgState === "showNewImage") {
-//            // console.log(mainWindow.state)
-//            //            imageTimer.start()
-
-//        } else if(imgState === "hideOldImage") {
-//            // console.log(mainWindow.state)
-//            imageTimer.stop()
-
-//        } else if(imgState === "fadeOut") {
-//            // console.log(mainWindow.state)
-
-//        } else {
-//            // console.log(mainWindow.state)
-//            console.error("UNDEFINED STATE")
-
-//        }
-//    }
-
     function goToImage(direction) {
-        imageTimer.stop()
+//        imageTimer.stop()
         if(direction === "next") {
             movingForward = true
         } else {
             movingForward = false
         }
-        appWindow.setImageState("ImageOut")
+        appWindow.setImageState("ImageInterrupt")
     }
 
     function loadSettingsDialog() {
@@ -162,6 +107,7 @@ ApplicationWindow {
         interval: showImageDuration
         running: false
         onTriggered: {
+            console.log("imageTimer triggered")
             mainWindow.state = "ImageReset"
         }
     }
@@ -180,6 +126,7 @@ ApplicationWindow {
         onDoubleClicked: loadSettingsDialog() //launch settings dialog
         onPressAndHold: appWindow.toggleFullScreen()
         onClicked: {
+            console.log("MOUSE CLICK")
             if(mouseX < Screen.width / 4) {     // we clicked on the left so we want to back up
                 goToImage("previous")
             } else if(mouseX > 3*Screen.width / 4){
