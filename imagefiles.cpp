@@ -23,7 +23,7 @@ QString imageFiles::nextImage()
 {
     if( imagePointer == 0) {
         int randNum = qrand();
-        qDebug() << "Random number:" << randNum;
+//        qDebug() << "Random number:" << randNum;
         imagesShown.insert(0, randNum % imageCount);
     } else {
         imagePointer--;
@@ -33,19 +33,19 @@ QString imageFiles::nextImage()
 
     QString imageURL = "image://myImageProvider/"+photoUrlList.at(
                 imagesShown.at(imagePointer));
-    qDebug() << imageURL << imagesShown;
+//    qDebug() << imageURL << imagesShown;
     return imageURL;
 }
 
 QString imageFiles::previousImage()
 {
-    imagePointer++;
+    imagePointer+=2;    // NOT SURE WHY THIS NEEDS TO BE "PLUS 2" BUT IT WORKS
     if(imagePointer >= imagesShown.size())
         imagePointer = imagesShown.size()-1;
 
     QString imageURL = "image://myImageProvider/"+photoUrlList.at(
                 imagesShown.at(imagePointer));
-    qDebug() << imageURL;
+//    qDebug() << imageURL;
     return imageURL;
 }
 
@@ -95,7 +95,7 @@ void imageFiles::setupImageProvider(QQmlEngine *eng)
 
 void imageFiles::readImageURLsFromDisk(QDir d)
 {
-    qDebug() << "Image URL:" << d;
+//    qDebug() << "Image URL:" << d;
     photoUrlList.clear();
     QDirIterator it(d, QDirIterator::Subdirectories);
     while (it.hasNext()) {
@@ -108,5 +108,5 @@ void imageFiles::readImageURLsFromDisk(QDir d)
         }
     }
     imageCount = photoUrlList.count();
-    qDebug() << imageCount << photoUrlList.at(0);
+//    qDebug() << imageCount << photoUrlList.at(0);
 }

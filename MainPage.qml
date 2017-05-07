@@ -9,8 +9,8 @@ Rectangle {
     color: "black"
 
     function changeState(newState) {
-        console.log("Current State:", state)
-        console.log("New State:", newState)
+        // console.log("Current State:", state)
+        // console.log("New State:", newState)
         imagePage.state = newState
     }
 
@@ -19,7 +19,7 @@ Rectangle {
         interval: 1000
         running: false
         onTriggered: {
-            console.log("startoffTimer stopping")
+            // console.log("startoffTimer stopping")
             startOffTimer.stop()
             appWindow.setImageState("fadeIn")
         }
@@ -40,7 +40,7 @@ Rectangle {
         source: newBackgroundImage
         radius: appWindow.blurValue
         opacity: 0
-//        onOpacityChanged: console.log("NEW IMAGE BLUR OPACITY CHANGED TO:", newBackgroundBlur.opacity, "state is:", imagePage.state)
+//        onOpacityChanged: // console.log("NEW IMAGE BLUR OPACITY CHANGED TO:", newBackgroundBlur.opacity, "state is:", imagePage.state)
     }
 
     Image {
@@ -120,7 +120,7 @@ Rectangle {
             StateChangeScript {
                 script: {
                     name: "InitializeScript"
-                    console.log("InitializeScript")
+                    // console.log("InitializeScript")
                     appWindow.loadNextImage()
                     changeState("ImageOut")
                 }
@@ -199,7 +199,7 @@ Rectangle {
             StateChangeScript {
                 name: "ImageDisplayScript"
                 script: {
-                    console.log("ImageDisplayScript")
+                    // console.log("ImageDisplayScript")
                     appWindow.loadNextImage()
                 }
             }
@@ -329,7 +329,7 @@ Rectangle {
 
             onRunningChanged: {
                 if((state=="ImageIn") && (!running)) {
-                    console.log("ImageChangeScript")
+                    // console.log("ImageChangeScript")
                     mainWindow.oldImage = mainWindow.currentImage
                     changeState("ImageDisplay")
                 }
@@ -346,7 +346,7 @@ Rectangle {
             from: "*"
             to: "ImageReset"
             onRunningChanged: {
-                console.log("ImageResetScript")
+                // console.log("ImageResetScript")
                 changeState("ImageOut")
             }
         },
@@ -361,7 +361,7 @@ Rectangle {
             }
 
             onRunningChanged:  {
-                console.log("ImageInterruptScript")
+                // console.log("ImageInterruptScript")
                 changeState("ImageOut")
             }
         }

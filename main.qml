@@ -18,7 +18,7 @@ ApplicationWindow {
     property string pictureHome: ""
     property bool movingForward: true
 
-    visibility: "FullScreen"
+//    visibility: "FullScreen"
 
     function toggleFullScreen() {
         // console.log("****VISIBILITY IS:",appWindow.visibility)
@@ -35,7 +35,7 @@ ApplicationWindow {
     function loadNextImage() {
         if(movingForward) {
             mainWindow.nextImage = myImages.nextImage()
-            // // console.log("Next Image")
+            // console.log("Next Image")
         }
         else {
             mainWindow.nextImage = myImages.previousImage()
@@ -72,18 +72,24 @@ ApplicationWindow {
             mainWindow.oldImage = mainWindow.currentImage
             mainWindow.state = imgState
         }
+        else if(imgState==="ImageInterrupt") {
+            loadNextImage()
+            mainWindow.state = imgState
+//            console.log("state is ImageInterrupt")
+        }
         else {
-            // console.log("HELP!! Unknown image state:", imgState)
+             console.log("HELP!! Unknown image state:", imgState)
         }
     }
 
     function goToImage(direction) {
-//        imageTimer.stop()
+        imageTimer.stop()
         if(direction === "next") {
             movingForward = true
         } else {
             movingForward = false
         }
+        console.log("Moving Forward:", movingForward, "timer is running?", imageTimer.running)
         appWindow.setImageState("ImageInterrupt")
     }
 
@@ -107,7 +113,7 @@ ApplicationWindow {
         interval: showImageDuration
         running: false
         onTriggered: {
-            console.log("imageTimer triggered")
+            // console.log("imageTimer triggered")
             mainWindow.state = "ImageReset"
         }
     }
@@ -126,14 +132,15 @@ ApplicationWindow {
         onDoubleClicked: loadSettingsDialog() //launch settings dialog
         onPressAndHold: appWindow.toggleFullScreen()
         onClicked: {
-            console.log("MOUSE CLICK")
-            if(mouseX < Screen.width / 4) {     // we clicked on the left so we want to back up
+            console.log("MOUSE CLICK", mouseX)
+            console.log("Screen width:", parent.width)
+            if(mouseX < parent.width / 4) {     // we clicked on the left so we want to back up
                 goToImage("previous")
-            } else if(mouseX > 3*Screen.width / 4){
+            } else if(mouseX > 3*parent.width / 4){
                 goToImage("next")
             }
         }
     }
-    Keys.onLeftPressed: console.log("Left key pressed")
-    Keys.onRightPressed: console.log("Right key pressed")
+    Keys.onLeftPressed: goToImage("previous")
+    Keys.onRightPressed: goToImage("next")
 }

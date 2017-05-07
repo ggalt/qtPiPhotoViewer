@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QVariant>
+#include <QQuickView>
 
 #define DISPLAY_DURATION    10 * 1000
 #define TRANSITION_DURATION 4 * 1000
@@ -36,6 +37,8 @@ void myApplicationWindow::Init()
     displayDuration = settings.value("displayDuration", DISPLAY_DURATION).toInt();
     transitionDuration = settings.value("transitionDuration", TRANSITION_DURATION).toInt();
     pictureDirectory = settings.value("pictureDirectory", pictureHomeDir).toString();
+//    QQuickView *v = new QQuickView(&engine,0);
+//    v->setScreen();
 
     QDir d(pictureDirectory);
 

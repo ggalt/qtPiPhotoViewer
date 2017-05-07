@@ -16,7 +16,7 @@ MyImageProvider::~MyImageProvider()
 QImage MyImageProvider::requestImage(const QString &id,
                                      QSize *size, const QSize &requestedSize)
 {
-    qDebug() << "image id ==" << id;
+//    qDebug() << "image id ==" << id;
     QImageReader imgReader(id);
     imgReader.setAutoTransform(true);
     QImage initImage = imgReader.read();
